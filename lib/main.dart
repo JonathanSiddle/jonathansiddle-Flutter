@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jonathansiddle/HeaderWidget.dart';
+import 'package:jonathansiddle/navigationBar.dart';
 
 void main() {
   runApp(MyApp());
@@ -73,24 +74,30 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      body: Container(
-        // color: Color.fromARGB(255, 7, 54, 56),
-        color: Colors.white,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [Expanded(child: HeaderWidget())],
+      body: SingleChildScrollView(
+        child: Container(
+          // color: Color.fromARGB(255, 7, 54, 56),
+          color: Colors.white,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(30, 30, 30, 0),
+                  child: NavigationBar(),
                 ),
-              ),
-              SelectableText(
-                'Main body text',
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.all(30.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [Expanded(child: HeaderWidget())],
+                  ),
+                ),
+                SelectableText(
+                  'Main body text',
+                ),
+              ],
+            ),
           ),
         ),
       ),
