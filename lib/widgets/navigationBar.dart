@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:jonathansiddle/config/application.dart';
 
 class NavigationBar extends StatelessWidget {
   final textStyle =
@@ -41,6 +42,19 @@ class NavigationBar extends StatelessWidget {
                 constraints: BoxConstraints(minWidth: 0),
                 child: Text(
                   'Writing',
+                  style: textStyle,
+                ),
+              )),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+          child: TextButton(
+              onPressed: () =>
+                  Application.router.navigateTo(context, '/contact'),
+              child: Container(
+                constraints: BoxConstraints(minWidth: 0),
+                child: Text(
+                  'Contact',
                   style: textStyle,
                 ),
               )),

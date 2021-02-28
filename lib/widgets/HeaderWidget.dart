@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:jonathansiddle/responsiveWidget.dart';
+import 'package:jonathansiddle/widgets/responsiveWidget.dart';
 
 class HeaderWidget extends StatelessWidget {
   @override
