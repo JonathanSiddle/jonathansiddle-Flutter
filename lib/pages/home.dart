@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jonathansiddle/widgets/HeaderWidget.dart';
 import 'package:jonathansiddle/widgets/navigationBar.dart';
+import 'package:jonathansiddle/widgets/projectCard.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -25,9 +26,16 @@ class Home extends StatelessWidget {
                     children: [Expanded(child: HeaderWidget())],
                   ),
                 ),
-                SelectableText(
-                  'Main body text',
+                ProjectCard(
+                  title: 'Squiddy',
+                  description: 'This is a test description',
+                  iconPath: 'assets/squiddyIcon.png',
                 ),
+                ProjectCard(
+                  title: 'DEFT',
+                  description: 'This is a test description',
+                  iconPath: 'assets/deftIcon.png',
+                )
               ],
             ),
           ),
