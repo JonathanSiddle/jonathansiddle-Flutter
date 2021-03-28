@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jonathansiddle/config/application.dart';
+import 'package:http/http.dart' as http;
 
 class NavigationBar extends StatelessWidget {
   final textStyle =
@@ -13,7 +14,12 @@ class NavigationBar extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
           child: TextButton(
-              onPressed: () => print('Tapped home'),
+              onPressed: () async {
+                var contentUrl =
+                    Uri.https('medium.com', '/feed/@jonathansiddle/');
+                var content = await http.get(contentUrl);
+                print(content);
+              },
               child: Container(
                 constraints: BoxConstraints(minWidth: 0),
                 child: Text(

@@ -36,62 +36,121 @@ class _ProjectCardState extends State<ProjectCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        color: backgroundColor,
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.only(
+          topLeft: const Radius.circular(40.0),
+          topRight: const Radius.circular(40.0),
+        ),
+      ),
+      constraints: BoxConstraints(
+        maxHeight: 700,
+        minHeight: 700,
+        maxWidth: 500,
+        minWidth: 200,
+      ),
+      child: Card(
+        color: Colors.transparent,
+        elevation: 10,
         child: Stack(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                    child: Row(
-                      children: [
-                        Text(
-                          widget.title,
-                          style: TextStyle(
-                              fontSize: 48,
-                              color: TinyColor(backgroundColor).isLight()
-                                  ? Colors.black
-                                  : Colors.white,
-                              fontFamily: 'Jost'),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Container(
-                              constraints:
-                                  BoxConstraints(maxWidth: 200, maxHeight: 200),
-                              child: Image.asset(widget.iconPath)),
-                        ),
-                        Expanded(
-                            child: Text(
-                          widget.description,
-                          style: TextStyle(
-                              color: TinyColor(backgroundColor).isLight()
-                                  ? Colors.black
-                                  : Colors.white,
-                              fontFamily: 'Jost'),
-                        ))
-                      ],
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [Text('This will be the bottom button section')],
-                  )
-                ],
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+              child: Container(
+                color: Colors.transparent,
+                child: Image.asset('assets/SquiddyWebBackground.png'),
               ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Material(
+                elevation: 10,
+                shape: BeveledRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0),
+                )),
+                child: Container(
+                  constraints: BoxConstraints(maxHeight: 370, minHeight: 370),
+                ),
+              ),
+            ),
+            Positioned(
+              top: 300,
+              left: 215,
+              child: Container(
+                  constraints: BoxConstraints(maxHeight: 70, maxWidth: 70),
+                  child: Image.asset('assets/squiddyIcon.png')),
             )
+            // ClipPath(
+            //   clipper: DiagonalClipper(),
+            //   child: Container(
+            //       color: Colors.transparent,
+            //       child: Column(
+            //         children: [
+            //           Padding(
+            //             padding: const EdgeInsets.all(30.0),
+            //             child: Column(
+            //               children: [
+            //                 Padding(
+            //                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+            //                   child: Row(
+            //                     children: [
+            //                       Text(
+            //                         widget.title,
+            //                         style: TextStyle(
+            //                             fontSize: 48,
+            //                             color:
+            //                                 TinyColor(backgroundColor).isLight()
+            //                                     ? Colors.black
+            //                                     : Colors.white,
+            //                             fontFamily: 'Jost'),
+            //                       )
+            //                     ],
+            //                   ),
+            //                 ),
+            //                 Padding(
+            //                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+            //                   child: Row(
+            //                     children: [
+            //                       Padding(
+            //                         padding: const EdgeInsets.all(15.0),
+            //                         child: Container(
+            //                             constraints: BoxConstraints(
+            //                                 maxWidth: 200, maxHeight: 200),
+            //                             child: Image.asset(widget.iconPath)),
+            //                       ),
+            //                       Expanded(
+            //                           child: Text(
+            //                         widget.description,
+            //                         style: TextStyle(
+            //                             color:
+            //                                 TinyColor(backgroundColor).isLight()
+            //                                     ? Colors.black
+            //                                     : Colors.white,
+            //                             fontFamily: 'Jost'),
+            //                       ))
+            //                     ],
+            //                   ),
+            //                 ),
+            //                 Row(
+            //                   mainAxisAlignment: MainAxisAlignment.center,
+            //                   children: [
+            //                     Text('This will be the bottom button section')
+            //                   ],
+            //                 )
+            //               ],
+            //             ),
+            //           )
+            //         ],
+            //       )),
+            // ),
           ],
-        ));
+        ),
+      ),
+    );
   }
 
   Future<void> _setBackgroundColour() async {
@@ -105,4 +164,19 @@ class _ProjectCardState extends State<ProjectCard> {
       print('Setting card background color');
     });
   }
+}
+
+class DiagonalClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+    path.lineTo(size.height, size.height - 150);
+    path.lineTo(size.width, size.height - 100);
+    path.lineTo(0.0, size.width);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
 }

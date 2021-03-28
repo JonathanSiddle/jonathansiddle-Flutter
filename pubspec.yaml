@@ -29,6 +29,7 @@ dependencies:
   cupertino_icons: ^1.0.0
   palette_generator: ^0.2.3
   tinycolor: ^1.0.3
+  http: ^0.13.0
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +57,7 @@ flutter:
         - asset: assets/fonts/Jost-Regular.ttf
  
   assets:
+    - assets/SquiddyWebBackground.png  
     - assets/squiddyIcon.png
     - assets/deftIcon.png
     - assets/meAvatar.svg
