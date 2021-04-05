@@ -4,9 +4,9 @@ import 'package:jonathansiddle/widgets/footer.dart';
 import 'package:jonathansiddle/widgets/navigationBar.dart';
 import 'package:jonathansiddle/widgets/projectCard.dart';
 
-class Home extends StatelessWidget {
-  PageController pc = PageController();
+final projectsKey = GlobalKey();
 
+class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,6 +30,7 @@ class Home extends StatelessWidget {
                   ),
                 ),
                 Padding(
+                  key: projectsKey,
                   padding: const EdgeInsets.fromLTRB(30, 30, 30, 0),
                   child: Column(
                     children: [

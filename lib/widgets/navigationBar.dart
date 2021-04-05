@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jonathansiddle/config/application.dart';
 import 'package:http/http.dart' as http;
+import 'package:jonathansiddle/pages/home.dart';
 import 'package:jonathansiddle/widgets/responsiveWidget.dart';
+import 'package:mailto/mailto.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NavigationBar extends StatelessWidget {
@@ -63,7 +65,9 @@ class NavigationBar extends StatelessWidget {
       Padding(
         padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
         child: TextButton(
-            onPressed: () => print('Tapped Project'),
+            onPressed: () {
+              Scrollable.ensureVisible(projectsKey.currentContext);
+            },
             child: Container(
               constraints: BoxConstraints(minWidth: 0),
               child: Text(
@@ -96,7 +100,10 @@ class NavigationBar extends StatelessWidget {
       Padding(
         padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
         child: TextButton(
-            onPressed: () => print('Tapped contact'),
+            onPressed: () async {
+              final link = Mailto(to: ['jonathan@siddle.dev']);
+              await launch(link.toString());
+            },
             child: Container(
               constraints: BoxConstraints(minWidth: 0),
               child: Text(
