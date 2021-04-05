@@ -1,7 +1,10 @@
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jonathansiddle/config/application.dart';
 import 'package:http/http.dart' as http;
+import 'package:jonathansiddle/widgets/responsiveWidget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NavigationBar extends StatelessWidget {
   final textStyle =
@@ -9,71 +12,110 @@ class NavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return ResponsiveWidget(
+      largeScreen: horizontalDisplay(),
+      mediumScreen: horizontalDisplay(),
+      smallScreen: verticalDisplay(),
+    );
+  }
+
+  Widget verticalDisplay() {
+    return ExpandablePanel(
+        header: Container(),
+        collapsed: Container(),
+        expanded: Column(
+          children: getButtons(settingsSpacer: false),
+        ),
+        theme: ExpandableThemeData(
+          expandIcon: FontAwesomeIcons.bars,
+          collapseIcon: FontAwesomeIcons.bars,
+        )
+        // tapHeaderToExpand: true,
+        // hasIcon: true,
+        );
+  }
+
+  Widget horizontalDisplay() {
     return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-          child: TextButton(
-              onPressed: () async {
-                var contentUrl =
-                    Uri.https('medium.com', '/feed/@jonathansiddle/');
-                var content = await http.get(contentUrl);
-                print(content);
-              },
-              child: Container(
-                constraints: BoxConstraints(minWidth: 0),
-                child: Text(
-                  'Home',
-                  style: textStyle,
-                ),
-              )),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-          child: TextButton(
-              onPressed: () => print('Tapped home'),
-              child: Container(
-                constraints: BoxConstraints(minWidth: 0),
-                child: Text(
-                  'Projects',
-                  style: textStyle,
-                ),
-              )),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-          child: TextButton(
-              onPressed: () => print('Tapped home'),
-              child: Container(
-                constraints: BoxConstraints(minWidth: 0),
-                child: Text(
-                  'Writing',
-                  style: textStyle,
-                ),
-              )),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-          child: TextButton(
-              onPressed: () =>
-                  Application.router.navigateTo(context, '/contact'),
-              child: Container(
-                constraints: BoxConstraints(minWidth: 0),
-                child: Text(
-                  'Contact',
-                  style: textStyle,
-                ),
-              )),
-        ),
-        Spacer(),
-        IconButton(
+      children: getButtons(),
+    );
+  }
+
+  List<Widget> getButtons({bool settingsSpacer = true}) {
+    return [
+      // Padding(
+      //   padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+      //   child: TextButton(
+      //       onPressed: () async {
+      //         var contentUrl =
+      //             Uri.https('medium.com', '/feed/@jonathansiddle/');
+      //         var content = await http.get(contentUrl);
+      //         print(content);
+      //       },
+      //       child: Container(
+      //         constraints: BoxConstraints(minWidth: 0),
+      //         child: Text(
+      //           'Home',
+      //           style: textStyle,
+      //         ),
+      //       )),
+      // ),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+        child: TextButton(
+            onPressed: () => print('Tapped Project'),
+            child: Container(
+              constraints: BoxConstraints(minWidth: 0),
+              child: Text(
+                'Projects',
+                style: textStyle,
+              ),
+            )),
+      ),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+        child: TextButton(
+            onPressed: () async {
+              if (await canLaunch('https://medium.com/@jonathansiddle')) {
+                await launch(
+                  'https://medium.com/@jonathansiddle',
+                  forceSafariVC: true,
+                  forceWebView: true,
+                  enableJavaScript: true,
+                );
+              }
+            },
+            child: Container(
+              constraints: BoxConstraints(minWidth: 0),
+              child: Text(
+                'Writing',
+                style: textStyle,
+              ),
+            )),
+      ),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+        child: TextButton(
+            onPressed: () => print('Tapped contact'),
+            child: Container(
+              constraints: BoxConstraints(minWidth: 0),
+              child: Text(
+                'Contact',
+                style: textStyle,
+              ),
+            )),
+      ),
+      settingsSpacer ? Spacer() : Container(),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+        child: IconButton(
             icon: Icon(
               FontAwesomeIcons.cog,
               color: Colors.grey[700],
               size: 32,
             ),
             onPressed: () => print('Tapped Settings')),
-      ],
-    );
+      ),
+    ];
   }
 }

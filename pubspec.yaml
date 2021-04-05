@@ -30,6 +30,8 @@ dependencies:
   palette_generator: ^0.2.3
   tinycolor: ^1.0.3
   http: ^0.13.0
+  expandable: ^5.0.1
+  url_launcher: ^6.0.3
 
 dev_dependencies:
   flutter_test:

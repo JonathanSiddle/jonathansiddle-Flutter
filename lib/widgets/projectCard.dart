@@ -25,6 +25,7 @@ class ProjectCard extends StatefulWidget {
 
 class _ProjectCardState extends State<ProjectCard> {
   Color backgroundColor = Colors.white;
+  var projectImageKey = GlobalKey();
 
   @override
   void initState() {
@@ -36,117 +37,131 @@ class _ProjectCardState extends State<ProjectCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.only(
-          topLeft: const Radius.circular(40.0),
-          topRight: const Radius.circular(40.0),
-        ),
-      ),
-      constraints: BoxConstraints(
-        maxHeight: 700,
-        minHeight: 700,
-        maxWidth: 500,
-        minWidth: 200,
-      ),
-      child: Card(
-        color: Colors.transparent,
-        elevation: 10,
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+      child: Container(
         child: Stack(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-              child: Container(
+            Container(
+              decoration: BoxDecoration(
                 color: Colors.transparent,
-                child: Image.asset('assets/SquiddyWebBackground.png'),
+                borderRadius: BorderRadius.only(
+                  topLeft: const Radius.circular(40.0),
+                  topRight: const Radius.circular(40.0),
+                ),
               ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Material(
-                elevation: 10,
-                shape: BeveledRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20.0),
-                  topRight: Radius.circular(20.0),
-                )),
-                child: Container(
-                  constraints: BoxConstraints(maxHeight: 370, minHeight: 370),
+              constraints: BoxConstraints(
+                maxWidth: 500,
+                minWidth: 200,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 50.0, 15, 0),
+                child: Card(
+                  // color: Colors.pink,
+                  shape: BeveledRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20.0),
+                    topRight: Radius.circular(20.0),
+                  )),
+                  elevation: 10,
+                  child: Column(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20)),
+                        child: Container(
+                          // constraints: BoxConstraints(maxHeight: 200),
+                          color: Colors.transparent,
+                          child: Image.asset(
+                            'assets/SquiddyWebBackground.png',
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        constraints: BoxConstraints(minHeight: 370),
+                      ),
+                    ],
+                  ),
+
+                  // ClipPath(
+                  //   clipper: DiagonalClipper(),
+                  //   child: Container(
+                  //       color: Colors.transparent,
+                  //       child: Column(
+                  //         children: [
+                  //           Padding(
+                  //             padding: const EdgeInsets.all(30.0),
+                  //             child: Column(
+                  //               children: [
+                  //                 Padding(
+                  //                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                  //                   child: Row(
+                  //                     children: [
+                  //                       Text(
+                  //                         widget.title,
+                  //                         style: TextStyle(
+                  //                             fontSize: 48,
+                  //                             color:
+                  //                                 TinyColor(backgroundColor).isLight()
+                  //                                     ? Colors.black
+                  //                                     : Colors.white,
+                  //                             fontFamily: 'Jost'),
+                  //                       )
+                  //                     ],
+                  //                   ),
+                  //                 ),
+                  //                 Padding(
+                  //                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                  //                   child: Row(
+                  //                     children: [
+                  //                       Padding(
+                  //                         padding: const EdgeInsets.all(15.0),
+                  //                         child: Container(
+                  //                             constraints: BoxConstraints(
+                  //                                 maxWidth: 200, maxHeight: 200),
+                  //                             child: Image.asset(widget.iconPath)),
+                  //                       ),
+                  //                       Expanded(
+                  //                           child: Text(
+                  //                         widget.description,
+                  //                         style: TextStyle(
+                  //                             color:
+                  //                                 TinyColor(backgroundColor).isLight()
+                  //                                     ? Colors.black
+                  //                                     : Colors.white,
+                  //                             fontFamily: 'Jost'),
+                  //                       ))
+                  //                     ],
+                  //                   ),
+                  //                 ),
+                  //                 Row(
+                  //                   mainAxisAlignment: MainAxisAlignment.center,
+                  //                   children: [
+                  //                     Text('This will be the bottom button section')
+                  //                   ],
+                  //                 )
+                  //               ],
+                  //             ),
+                  //           )
+                  //         ],
+                  //       )),
+                  // ),
                 ),
               ),
             ),
             Positioned(
-              top: 300,
-              left: 215,
-              child: Container(
-                  constraints: BoxConstraints(maxHeight: 70, maxWidth: 70),
-                  child: Image.asset('assets/squiddyIcon.png')),
+              top: 0,
+              right: 0,
+              child: Material(
+                color: Colors.transparent,
+                elevation: 10,
+                child: Container(
+                    constraints: BoxConstraints(maxWidth: 70, maxHeight: 70),
+                    child: Image.asset(widget.iconPath)),
+              ),
             )
-            // ClipPath(
-            //   clipper: DiagonalClipper(),
-            //   child: Container(
-            //       color: Colors.transparent,
-            //       child: Column(
-            //         children: [
-            //           Padding(
-            //             padding: const EdgeInsets.all(30.0),
-            //             child: Column(
-            //               children: [
-            //                 Padding(
-            //                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-            //                   child: Row(
-            //                     children: [
-            //                       Text(
-            //                         widget.title,
-            //                         style: TextStyle(
-            //                             fontSize: 48,
-            //                             color:
-            //                                 TinyColor(backgroundColor).isLight()
-            //                                     ? Colors.black
-            //                                     : Colors.white,
-            //                             fontFamily: 'Jost'),
-            //                       )
-            //                     ],
-            //                   ),
-            //                 ),
-            //                 Padding(
-            //                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-            //                   child: Row(
-            //                     children: [
-            //                       Padding(
-            //                         padding: const EdgeInsets.all(15.0),
-            //                         child: Container(
-            //                             constraints: BoxConstraints(
-            //                                 maxWidth: 200, maxHeight: 200),
-            //                             child: Image.asset(widget.iconPath)),
-            //                       ),
-            //                       Expanded(
-            //                           child: Text(
-            //                         widget.description,
-            //                         style: TextStyle(
-            //                             color:
-            //                                 TinyColor(backgroundColor).isLight()
-            //                                     ? Colors.black
-            //                                     : Colors.white,
-            //                             fontFamily: 'Jost'),
-            //                       ))
-            //                     ],
-            //                   ),
-            //                 ),
-            //                 Row(
-            //                   mainAxisAlignment: MainAxisAlignment.center,
-            //                   children: [
-            //                     Text('This will be the bottom button section')
-            //                   ],
-            //                 )
-            //               ],
-            //             ),
-            //           )
-            //         ],
-            //       )),
-            // ),
           ],
         ),
       ),
