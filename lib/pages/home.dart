@@ -49,6 +49,8 @@ class Home extends StatelessWidget {
                               title: 'Squiddy',
                               description: 'This is a test description',
                               iconPath: 'assets/squiddyIcon.png',
+                              playStoreLink:
+                                  'https://play.google.com/store/apps/details?id=app.squiddy&gl=GB',
                             ),
                             ProjectCard(
                               title: 'DEFT',

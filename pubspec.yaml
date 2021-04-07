@@ -65,6 +65,8 @@ flutter:
     - assets/deftIcon.png
     - assets/meAvatar.svg
     - assets/meAvatar.png
+    - assets/playbadge.png
+    - assets/appstorebadge.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

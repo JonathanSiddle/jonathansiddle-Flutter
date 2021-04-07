@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:tinycolor/tinycolor.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProjectCard extends StatefulWidget {
   final String title;
@@ -81,6 +82,33 @@ class _ProjectCardState extends State<ProjectCard> {
                       ),
                       Container(
                         constraints: BoxConstraints(minHeight: 370),
+                        child: Column(
+                          children: [
+                            Text(this.widget.title),
+                            // Spacer(),
+                            GestureDetector(
+                              onTap: () async {
+                                if (await canLaunch(
+                                    'https://medium.com/@jonathansiddle')) {
+                                  await launch(
+                                    'https://medium.com/@jonathansiddle',
+                                    forceSafariVC: true,
+                                    forceWebView: true,
+                                    enableJavaScript: true,
+                                  );
+                                }
+                              },
+                              child: Image.asset(
+                                'assets/playbadge.png',
+                                width: 200,
+                              ),
+                            ),
+                            Image.asset(
+                              'assets/appstorebadge.png',
+                              width: 175,
+                            )
+                          ],
+                        ),
                       ),
                     ],
                   ),
