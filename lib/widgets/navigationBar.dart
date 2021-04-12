@@ -113,16 +113,16 @@ class NavigationBar extends StatelessWidget {
             )),
       ),
       settingsSpacer ? Spacer() : Container(),
-      Padding(
-        padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-        child: IconButton(
-            icon: Icon(
-              FontAwesomeIcons.cog,
-              color: Colors.grey[700],
-              size: 32,
-            ),
-            onPressed: () => print('Tapped Settings')),
-      ),
+      // Padding(
+      //   padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+      //   child: IconButton(
+      //       icon: Icon(
+      //         FontAwesomeIcons.cog,
+      //         color: Colors.grey[700],
+      //         size: 32,
+      //       ),
+      //       onPressed: () => print('Tapped Settings')),
+      // ),
     ];
   }
 }

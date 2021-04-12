@@ -47,15 +47,23 @@ class Home extends StatelessWidget {
                           children: [
                             ProjectCard(
                               title: 'Squiddy',
-                              description: 'This is a test description',
+                              description:
+                                  'Squiddy is an open source client for Octopus Energy, it allows user to track energy use and view agile prices. You can build the application from source or you can download the application from the Google Play and iOS app stores for £1.99, which contributes to the further development of the applications ',
+                              backgroundImage:
+                                  'assets/SquiddyWebBackground.png',
                               iconPath: 'assets/squiddyIcon.png',
                               playStoreLink:
                                   'https://play.google.com/store/apps/details?id=app.squiddy&gl=GB',
+                              appStoreLink:
+                                  'https://apps.apple.com/gb/app/squiddy-for-octopus-energy/id1537614113',
                             ),
                             ProjectCard(
                               title: 'DEFT',
-                              description: 'This is a test description',
+                              description:
+                                  'DEFT is an ongoing project at Applied Scientific Technologies. The goal of the project is a hardware an software component that connects an IoT device to traditional lab instruction and turning them into a smart instrument that can be linked to the companion app, which acts a digital log book and can control instruction and capture readings in real-time.',
+                              backgroundImage: 'assets/deft-background.png',
                               iconPath: 'assets/deftIcon.png',
+                              webLink: 'https://www.appliedst.co.uk/deft',
                             )
                           ],
                         ),

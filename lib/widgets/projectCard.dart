@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:tinycolor/tinycolor.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -7,6 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 class ProjectCard extends StatefulWidget {
   final String title;
   final String description;
+  final String backgroundImage;
   final String iconPath;
   final String playStoreLink;
   final String appStoreLink;
@@ -16,6 +18,7 @@ class ProjectCard extends StatefulWidget {
       {@required this.title,
       @required this.description,
       @required this.iconPath,
+      @required this.backgroundImage,
       this.playStoreLink,
       this.appStoreLink,
       this.webLink});
@@ -75,107 +78,57 @@ class _ProjectCardState extends State<ProjectCard> {
                           // constraints: BoxConstraints(maxHeight: 200),
                           color: Colors.transparent,
                           child: Image.asset(
-                            'assets/SquiddyWebBackground.png',
+                            this.widget.backgroundImage,
                             fit: BoxFit.fitWidth,
                           ),
                         ),
                       ),
-                      Container(
-                        constraints: BoxConstraints(minHeight: 370),
-                        child: Column(
-                          children: [
-                            Text(this.widget.title),
-                            // Spacer(),
-                            GestureDetector(
-                              onTap: () async {
-                                if (await canLaunch(
-                                    'https://medium.com/@jonathansiddle')) {
-                                  await launch(
-                                    'https://medium.com/@jonathansiddle',
-                                    forceSafariVC: true,
-                                    forceWebView: true,
-                                    enableJavaScript: true,
-                                  );
-                                }
-                              },
-                              child: Image.asset(
-                                'assets/playbadge.png',
-                                width: 200,
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Container(
+                          constraints: BoxConstraints(minHeight: 550),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                child: Text(
+                                  this.widget.title,
+                                  style: TextStyle(
+                                      fontSize: 32, fontFamily: 'Jost'),
+                                ),
                               ),
-                            ),
-                            Image.asset(
-                              'assets/appstorebadge.png',
-                              width: 175,
-                            )
-                          ],
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                child: this.widget.webLink != null
+                                    ? Linkify(
+                                        onOpen: (link) async {
+                                          if (await canLaunch(link.url)) {
+                                            await launch(link.url);
+                                          } else {
+                                            throw 'Could not launch $link';
+                                          }
+                                        },
+                                        text: this.widget.webLink)
+                                    : Container(),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                child: Text(this.widget.description,
+                                    softWrap: true,
+                                    style: TextStyle(
+                                        fontSize: 24, fontFamily: 'Jost')),
+                              ),
+                              // Spacer(),
+                              appStoreLinksVerticle()
+                            ],
+                          ),
                         ),
                       ),
                     ],
                   ),
-
-                  // ClipPath(
-                  //   clipper: DiagonalClipper(),
-                  //   child: Container(
-                  //       color: Colors.transparent,
-                  //       child: Column(
-                  //         children: [
-                  //           Padding(
-                  //             padding: const EdgeInsets.all(30.0),
-                  //             child: Column(
-                  //               children: [
-                  //                 Padding(
-                  //                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                  //                   child: Row(
-                  //                     children: [
-                  //                       Text(
-                  //                         widget.title,
-                  //                         style: TextStyle(
-                  //                             fontSize: 48,
-                  //                             color:
-                  //                                 TinyColor(backgroundColor).isLight()
-                  //                                     ? Colors.black
-                  //                                     : Colors.white,
-                  //                             fontFamily: 'Jost'),
-                  //                       )
-                  //                     ],
-                  //                   ),
-                  //                 ),
-                  //                 Padding(
-                  //                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                  //                   child: Row(
-                  //                     children: [
-                  //                       Padding(
-                  //                         padding: const EdgeInsets.all(15.0),
-                  //                         child: Container(
-                  //                             constraints: BoxConstraints(
-                  //                                 maxWidth: 200, maxHeight: 200),
-                  //                             child: Image.asset(widget.iconPath)),
-                  //                       ),
-                  //                       Expanded(
-                  //                           child: Text(
-                  //                         widget.description,
-                  //                         style: TextStyle(
-                  //                             color:
-                  //                                 TinyColor(backgroundColor).isLight()
-                  //                                     ? Colors.black
-                  //                                     : Colors.white,
-                  //                             fontFamily: 'Jost'),
-                  //                       ))
-                  //                     ],
-                  //                   ),
-                  //                 ),
-                  //                 Row(
-                  //                   mainAxisAlignment: MainAxisAlignment.center,
-                  //                   children: [
-                  //                     Text('This will be the bottom button section')
-                  //                   ],
-                  //                 )
-                  //               ],
-                  //             ),
-                  //           )
-                  //         ],
-                  //       )),
-                  // ),
                 ),
               ),
             ),
@@ -189,10 +142,106 @@ class _ProjectCardState extends State<ProjectCard> {
                     constraints: BoxConstraints(maxWidth: 70, maxHeight: 70),
                     child: Image.asset(widget.iconPath)),
               ),
-            )
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget appStoreLinksVerticle() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        this.widget.playStoreLink != null
+            ? GestureDetector(
+                onTap: () async {
+                  if (await canLaunch('${this.widget.playStoreLink}')) {
+                    await launch(
+                      '${this.widget.playStoreLink}',
+                      forceSafariVC: true,
+                      forceWebView: true,
+                      enableJavaScript: true,
+                    );
+                  }
+                },
+                child: Image.asset(
+                  'assets/playbadge.png',
+                  width: 200,
+                ),
+              )
+            : Container(),
+        this.widget.playStoreLink != null
+            ? GestureDetector(
+                onTap: () async {
+                  if (await canLaunch('${this.widget.appStoreLink}')) {
+                    await launch(
+                      '${this.widget.appStoreLink}',
+                      forceSafariVC: true,
+                      forceWebView: true,
+                      enableJavaScript: true,
+                    );
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
+                  child: Image.asset(
+                    'assets/appstorebadge.png',
+                    // width: 175,
+                    height: 55,
+                  ),
+                ),
+              )
+            : Container()
+      ],
+    );
+  }
+
+  Widget appStoreLinksHorizontal() {
+    return Wrap(
+      children: [
+        this.widget.playStoreLink != null
+            ? GestureDetector(
+                onTap: () async {
+                  if (await canLaunch('${this.widget.playStoreLink}')) {
+                    await launch(
+                      '${this.widget.playStoreLink}',
+                      forceSafariVC: true,
+                      forceWebView: true,
+                      enableJavaScript: true,
+                    );
+                  }
+                },
+                child: Image.asset(
+                  'assets/playbadge.png',
+                  width: 200,
+                ),
+              )
+            : Container(),
+        this.widget.playStoreLink != null
+            ? GestureDetector(
+                onTap: () async {
+                  if (await canLaunch('${this.widget.appStoreLink}')) {
+                    await launch(
+                      '${this.widget.appStoreLink}',
+                      forceSafariVC: true,
+                      forceWebView: true,
+                      enableJavaScript: true,
+                    );
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
+                  child: Image.asset(
+                    'assets/appstorebadge.png',
+                    // width: 175,
+                    height: 55,
+                  ),
+                ),
+              )
+            : Container()
+      ],
     );
   }
 
