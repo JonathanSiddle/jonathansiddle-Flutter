@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:palette_generator/palette_generator.dart';
@@ -70,30 +71,35 @@ class _ProjectCardState extends State<ProjectCard> {
                   elevation: 10,
                   child: Column(
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20)),
+                      ClipPath(
+                        clipper: ShapeBorderClipper(
+                            shape: BeveledRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20.0),
+                          topRight: Radius.circular(20.0),
+                        ))),
                         child: Container(
-                          // constraints: BoxConstraints(maxHeight: 200),
+                          constraints: BoxConstraints(maxHeight: 350),
                           color: Colors.transparent,
                           child: Image.asset(
                             this.widget.backgroundImage,
-                            fit: BoxFit.fitWidth,
+                            fit: BoxFit.fill,
+                            height: 350,
                           ),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Container(
-                          constraints: BoxConstraints(minHeight: 550),
+                          constraints:
+                              BoxConstraints(minHeight: 575, maxHeight: 575),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                child: Text(
+                                child: SelectableText(
                                   this.widget.title,
                                   style: TextStyle(
                                       fontSize: 32, fontFamily: 'Jost'),
@@ -116,8 +122,8 @@ class _ProjectCardState extends State<ProjectCard> {
                               Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                                child: Text(this.widget.description,
-                                    softWrap: true,
+                                child: SelectableText(this.widget.description,
+                                    // softWrap: true,
                                     style: TextStyle(
                                         fontSize: 24, fontFamily: 'Jost')),
                               ),
@@ -155,45 +161,54 @@ class _ProjectCardState extends State<ProjectCard> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         this.widget.playStoreLink != null
-            ? GestureDetector(
-                onTap: () async {
-                  if (await canLaunch('${this.widget.playStoreLink}')) {
-                    await launch(
-                      '${this.widget.playStoreLink}',
-                      forceSafariVC: true,
-                      forceWebView: true,
-                      enableJavaScript: true,
-                    );
-                  }
-                },
-                child: Image.asset(
-                  'assets/playbadge.png',
-                  width: 200,
-                ),
-              )
-            : Container(),
-        this.widget.playStoreLink != null
-            ? GestureDetector(
-                onTap: () async {
-                  if (await canLaunch('${this.widget.appStoreLink}')) {
-                    await launch(
-                      '${this.widget.appStoreLink}',
-                      forceSafariVC: true,
-                      forceWebView: true,
-                      enableJavaScript: true,
-                    );
-                  }
-                },
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
+            ? MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () async {
+                    if (await canLaunch('${this.widget.playStoreLink}')) {
+                      await launch(
+                        '${this.widget.playStoreLink}',
+                        forceSafariVC: true,
+                        forceWebView: true,
+                        enableJavaScript: true,
+                      );
+                    }
+                  },
                   child: Image.asset(
-                    'assets/appstorebadge.png',
-                    // width: 175,
-                    height: 55,
+                    'assets/playbadge.png',
+                    width: 200,
                   ),
                 ),
               )
-            : Container()
+            : Container(),
+        this.widget.appStoreLink != null
+            ? Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () async {
+                      if (await canLaunch('${this.widget.appStoreLink}')) {
+                        await launch(
+                          '${this.widget.appStoreLink}',
+                          forceSafariVC: true,
+                          forceWebView: true,
+                          enableJavaScript: true,
+                        );
+                      }
+                    },
+                    child: Image.asset(
+                      'assets/appstorebadge.png',
+                      // width: 175,
+                      height: 55,
+                    ),
+                  ),
+                ),
+              )
+            : Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Container(),
+              )
       ],
     );
   }
@@ -202,45 +217,57 @@ class _ProjectCardState extends State<ProjectCard> {
     return Wrap(
       children: [
         this.widget.playStoreLink != null
-            ? GestureDetector(
-                onTap: () async {
-                  if (await canLaunch('${this.widget.playStoreLink}')) {
-                    await launch(
-                      '${this.widget.playStoreLink}',
-                      forceSafariVC: true,
-                      forceWebView: true,
-                      enableJavaScript: true,
-                    );
-                  }
-                },
-                child: Image.asset(
-                  'assets/playbadge.png',
-                  width: 200,
-                ),
-              )
-            : Container(),
-        this.widget.playStoreLink != null
-            ? GestureDetector(
-                onTap: () async {
-                  if (await canLaunch('${this.widget.appStoreLink}')) {
-                    await launch(
-                      '${this.widget.appStoreLink}',
-                      forceSafariVC: true,
-                      forceWebView: true,
-                      enableJavaScript: true,
-                    );
-                  }
-                },
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
+            ? MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () async {
+                    if (await canLaunch('${this.widget.playStoreLink}')) {
+                      await launch(
+                        '${this.widget.playStoreLink}',
+                        forceSafariVC: true,
+                        forceWebView: true,
+                        enableJavaScript: true,
+                      );
+                    }
+                  },
                   child: Image.asset(
-                    'assets/appstorebadge.png',
-                    // width: 175,
-                    height: 55,
+                    'assets/playbadge.png',
+                    width: 200,
                   ),
                 ),
               )
-            : Container()
+            : Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Container(),
+              ),
+        this.widget.appStoreLink != null
+            ? Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () async {
+                      if (await canLaunch('${this.widget.appStoreLink}')) {
+                        await launch(
+                          '${this.widget.appStoreLink}',
+                          forceSafariVC: true,
+                          forceWebView: true,
+                          enableJavaScript: true,
+                        );
+                      }
+                    },
+                    child: Image.asset(
+                      'assets/appstorebadge.png',
+                      // width: 175,
+                      height: 55,
+                    ),
+                  ),
+                ),
+              )
+            : Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Container(),
+              )
       ],
     );
   }

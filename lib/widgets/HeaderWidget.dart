@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jonathansiddle/widgets/responsiveWidget.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/rendering.dart';
 
 class HeaderWidget extends StatelessWidget {
+  final String introBio =
+      'A Full-Stack Engineer based in the UK, with a passion for design and Font-end development';
+
   @override
   Widget build(BuildContext context) {
     return ClipPath(
@@ -63,12 +70,12 @@ class HeaderWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Expanded(
-                        child: Text(
-                          'A Software Engineer based in the UK',
-                          softWrap: true,
+                        child: SelectableText(
+                          '$introBio',
+                          // softWrap: true,
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontSize: 48,
+                              fontSize: 36,
                               color: Colors.white,
                               fontFamily: 'Jost'),
                         ),
@@ -76,6 +83,56 @@ class HeaderWidget extends StatelessWidget {
                     ],
                   ),
                 ),
+              ),
+              Row(
+                children: [
+                  MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      child: Icon(
+                        FontAwesomeIcons.github,
+                        size: 50,
+                        color: Colors.white,
+                      ),
+                      onTap: () async {
+                        if (await canLaunch(
+                            'https://github.com/jonathansiddle')) {
+                          await launch(
+                            'https://github.com/jonathansiddle',
+                            forceSafariVC: true,
+                            forceWebView: true,
+                            enableJavaScript: true,
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(),
+                  ),
+                  MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      child: Icon(
+                        FontAwesomeIcons.linkedin,
+                        size: 50,
+                        color: Colors.white,
+                      ),
+                      onTap: () async {
+                        if (await canLaunch(
+                            'https://github.com/jonathansiddle')) {
+                          await launch(
+                            'https://github.com/jonathansiddle',
+                            forceSafariVC: true,
+                            forceWebView: true,
+                            enableJavaScript: true,
+                          );
+                        }
+                      },
+                    ),
+                  )
+                ],
               )
             ],
           ),
@@ -108,15 +165,64 @@ class HeaderWidget extends StatelessWidget {
             constraints: BoxConstraints(minHeight: 200),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-              child: Text(
-                'A Software Engineer based in the UK',
+              child: SelectableText(
+                '$introBio',
                 textAlign: TextAlign.center,
-                softWrap: true,
+                // softWrap: true,
                 style: TextStyle(
                     fontSize: 48, color: Colors.white, fontFamily: 'Jost'),
               ),
             ),
           ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                child: Icon(
+                  FontAwesomeIcons.github,
+                  size: 50,
+                  color: Colors.white,
+                ),
+                onTap: () async {
+                  if (await canLaunch('https://github.com/jonathansiddle')) {
+                    await launch(
+                      'https://github.com/jonathansiddle',
+                      forceSafariVC: true,
+                      forceWebView: true,
+                      enableJavaScript: true,
+                    );
+                  }
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(),
+            ),
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                child: Icon(
+                  FontAwesomeIcons.linkedin,
+                  size: 50,
+                  color: Colors.white,
+                ),
+                onTap: () async {
+                  if (await canLaunch('https://github.com/jonathansiddle')) {
+                    await launch(
+                      'https://github.com/jonathansiddle',
+                      forceSafariVC: true,
+                      forceWebView: true,
+                      enableJavaScript: true,
+                    );
+                  }
+                },
+              ),
+            )
+          ],
         )
       ],
     );
